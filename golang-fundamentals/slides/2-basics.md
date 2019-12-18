@@ -1,4 +1,7 @@
-## Dasar Pemograman Golang
+## Mari Belajar Golang
+
+<img src="./gopher.png" />
+
 ---
 
 ### Halo 🇮🇩!
