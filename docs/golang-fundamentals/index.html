@@ -1,0 +1,387 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-type" content="text/html; charset=utf-8"><meta name="theme-color" content="#3498db"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Dasar-dasar pemogramana Golang."><title>Golang fundamentals</title><meta property="og:title" content="Golang fundamentals"><meta property="og:type" content="article"><meta property="og:description" content="Dasar-dasar pemogramana Golang."><link href="vendor.7.7fb5b7ae151def31b5bc.css" rel="stylesheet"><link href="main.4.bb98e29f0a39d5edaf7e.css" rel="stylesheet"></head><body><div id="root"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="btn-sidebar" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg><article id="webslides"><section class="aligncenter title"><h1>Golang Fundamentals</h1><p><strong>Surya</strong> - Software Engineer @ Bukalapak</p><p><a href="https://github.com/Fs02">github.com/Fs02</a></p></section><section class="aligncenter"><h2>Mari Belajar Golang</h2><img src="0e9fde3b932ba24b688526c596b4991d.webp"></section><section class="aligncenter"><h2>Dasar Pemograman Golang</h2></section><section class="aligncenter"><h3>Halo 🇮🇩!</h3><pre><code class="language-javascript">package main
+
+import (
+    &quot;fmt&quot;
+)
+
+func main() {
+    fmt.Println(&quot;Halo 🇮🇩!&quot;)
+    // Output: Halo 🇮🇩!
+}
+</code></pre><ul><li>Setiap project golang minimal harus memiliki satu <code>package main</code> dengan sebuang fungsi <code>main()</code> didalamnya.</li><li>Jalankan menggunakan command <code>go run &lt;file&gt;.go</code></li><li>Compile menggunakan command <code>go build &lt;file&gt;.go</code></li></ul></section><section class="aligncenter"><h3>Deklarasi Variabel</h3><pre><code class="language-javascript">package main
+
+var a int
+
+// atau sekaligus
+var (
+    b float64
+    c string
+    d bool
+    e *bool
+)
+
+func main() {
+}
+</code></pre><ul><li>Variabel dapat dideklarasikan menggunakan keyword <code>var</code>.</li><li>Jika tidak ada nilai yang diberikan, variabel di golang akan selalu memiliki nilai kosong untuk tipe tersebut.</li></ul></section><section class="aligncenter"><h3>Deklarasi Variabel dengan Nilai</h3><pre><code class="language-javascript">package main
+
+import (
+    &quot;fmt&quot;
+)
+
+var (
+    a int     = 10
+    b float64 = 10.5
+    c string  = &quot;golang&quot;
+    d bool    = true
+    e *bool   = &amp;d // pointer ke b
+)
+
+func main() {
+    var bendera string = &quot;🇮🇩&quot;
+    fmt.Printf(&quot;Halo %s&quot;, bendera)
+    // Output: Halo 🇮🇩
+}
+</code></pre><ul><li>Variabel dapat dideklarasikan dengan memberikan nilai tertentu.</li></ul></section><section class="aligncenter"><h3>Deklarasi Variabel Alternatif</h3><pre><code class="language-javascript">package main
+
+import (
+    &quot;fmt&quot;
+)
+
+func main() {
+    // menggunakan var
+    var bendera = &quot;🇮🇩&quot;
+    fmt.Println(&quot;Halo&quot;, bendera)
+    // Output: Halo 🇮🇩
+
+
+    // menggunakan :=
+    a := 10
+    b := 10.5
+    c := &quot;golang&quot;
+    d := true
+    e := &amp;d
+
+    fmt.Println(a, b, c, d, e)
+    // Output: 10 10.5 golang true 0x40e020
+}
+</code></pre><ul><li>Golang dapat mendeteksi tipe data saat program di <code>compile</code>, sehingga tipe data pada umumnya tidak perlu ditulis.</li><li>Variabel juga dapat dideklarasikan tanpa menggunakan keyword <code>var</code>, akan tetapi menggunakan operator <code>:=</code>.</li></ul></section><section class="aligncenter"><h3>Konstanta</h3><pre><code class="language-javascript">package main
+
+import (
+    &quot;fmt&quot;
+)
+
+const (
+    a = 10
+    b = 10.5
+    c = &quot;golang&quot;
+    d = true
+)
+
+func main() {
+    fmt.Println(a, b, c, d)
+    // Output: 10 10.5 golang true
+}
+</code></pre><ul><li><code>Constant</code> dapat dideklarasi menggunakan keyword <code>const</code>.</li><li>Nilai yang dapat dijadikan <code>constant</code> hanyalah nilai yang dapat diketahui saat compile-time.</li><li>Pointer dan hasil eksekusi fungsi, tidak dapat dijadikan <code>constant</code>.</li></ul></section><section class="aligncenter"><h3>Array</h3><pre><code class="language-javascript">package main
+
+import (
+    &quot;fmt&quot;
+)
+
+func main() {
+    a := [5]string{&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;}
+    fmt.Println(a)
+    // Output: [a b c d e]
+
+    fmt.Println(len(a))
+    // Output: 5
+    
+    fmt.Println(a[0])
+    // Output: a
+}
+</code></pre><ul><li>Array di golang memiliki kapasitas yang ditentukan disaat deklarasi.</li><li>Besar kapasitas array di golang tidak dapat diubah saat program berjalan.</li></ul></section><section class="aligncenter"><h3>Slice</h3><pre><code class="language-javascript">package main
+
+import (
+    &quot;fmt&quot;
+)
+
+func main() {
+    a := []string{&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;}
+    fmt.Println(a)
+    // Output: [a b c d e]
+
+    a = append(a, &quot;f&quot;, &quot;g&quot;)
+    fmt.Println(a)
+    // Output: [a b c d e f g]
+
+    // hapus element pertama dan terakhir (slicing).
+    a = a[1:6]
+    fmt.Println(a)
+    // Output: [b c d e f]
+
+    // slices juga dapat dibuat menggunakan fungsi make
+    b := make([]string, 3, 5)
+    fmt.Printf(&quot;length: %v, capacity:%v\n&quot;, len(b), cap(b))
+    // Output:
+}
+</code></pre><ul><li>Slice memiliki kapasitas yang dinamis.</li><li>Elemen didalam slice dapat diubah, ditambah maupun dihapus saat program berjalan.</li></ul></section><section class="aligncenter"><h3>Map</h3><pre><code class="language-javascript">package main
+
+import (
+    &quot;fmt&quot;
+)
+
+func main() {
+    bulan := map[string]int{
+        &quot;januari&quot;:  1,
+        &quot;februari&quot;: 2,
+    }
+
+    // tambah atau ubah nilai elemen
+    bulan[&quot;maret&quot;] = 3
+
+    // hapus elemen
+    delete(bulan, &quot;maret&quot;)
+
+    fmt.Println(&quot;januari adalah bulan ke-&quot;, bulan[&quot;januari&quot;])
+    // Output: januari adalah bulan ke- 1
+}
+</code></pre><ul><li>Map juga dapat dibuat menggunakan fungsi make: <code>make(map[&lt;type key&gt;]&lt;type value&gt;)</code>, contoh: <code>make(map[string]int)</code>.</li></ul></section><section class="aligncenter"><h3>Percabangan</h3><pre><code class="language-javascript">package main
+
+import (
+    &quot;fmt&quot;
+)
+
+func main() {
+    nilai := 9
+
+    if nilai &lt; 5 {
+        fmt.Println(&quot;yeay!, kamu tidak lulus&quot;)      
+    } else if nilai &lt; 7 {
+        fmt.Println(&quot;yeay!, kamu hampir tidak lulus&quot;)
+    } else {
+        fmt.Println(&quot;yeay!, kamu lulus&quot;)
+    }
+    // Output: yeay!, kamu lulus
+}
+</code></pre><ul><li>Kondisi tidak perlu menggunakan tanda kurung.</li><li>Setiap aksi dari kondisi wajib menggunakan kurung kurawal.</li></ul></section><section class="aligncenter"><h3>Perulangan</h3><pre><code class="language-javascript">package main
+
+import (
+    &quot;fmt&quot;
+)
+
+func main() {
+    a := []string{&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;}
+
+    // menggunakan index tanpa range
+    for i := 0; i &lt; len(a); i++ {
+        fmt.Print(a[i])
+    }
+    fmt.Println()
+    // Output: abcd
+
+    // while loop
+    i := 0
+    for i &lt; 5 {
+        i++
+    }
+
+    // infinity loop
+    for {
+        break // keluar loop
+    }
+}
+</code></pre><ul><li>Loop digolang dideklarasikan tanpa menggugunakan tanda kurung.</li></ul></section><section class="aligncenter"><h3>Perulangan dengan Range</h3><pre><code class="language-javascript">package main
+
+import (
+    &quot;fmt&quot;
+)
+
+func main() {
+    a := []string{&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;}
+
+    // menggunakan range
+    for _, v := range a {
+        fmt.Print(v)
+    }
+    fmt.Println()
+    // Output: abcd
+
+    // menggunakan index
+    for i := range a {
+        fmt.Print(a[i])
+    }
+    fmt.Println()
+    // Output: abcd
+}
+</code></pre></section><section class="aligncenter"><h3>Fungsi</h3><pre><code class="language-javascript">package main
+
+import (
+    &quot;fmt&quot;
+)
+
+func tambah(a int,b int) int {
+   result := a * b
+   return result
+}
+
+func main() {
+    result := tambah(2, 3)
+    fmt.Println(result)
+    // Output: 5
+}
+</code></pre></section><section class="aligncenter"><h3>Struct</h3><pre><code class="language-javascript">type City struct {
+    Name       string
+    Population int
+}
+
+// Gunakan pointer receiver, untuk mengubah isi struct
+func (c *City) SetPopulation(population int) {
+    c.Population = population
+}
+
+func (c City) String() string {
+    return &quot;Name: &quot; + c.Name + &quot;, Populasi: &quot; + strconv.Itoa(c.Population)
+}
+
+func main() {
+    // deklarasi
+    bandung := City{Name: &quot;Bandung&quot;, Population: 1000}
+
+    fmt.Println(bandung.String())
+    // Output: Name: Bandung, Populasi: 1000
+
+    bandung.SetPopulation(1500)
+    fmt.Println(bandung)
+    // Output: Name: Bandung, Populasi: 1000
+}
+</code></pre><ul><li>Tidak ada class di golang, hanya ada struct.</li></ul></section><section class="aligncenter"><h3>Interface</h3><pre><code class="language-javascript">type Animal interface {
+    Sound() string
+}
+
+type Cat struct{}
+
+func (c Cat) Sound() string { return &quot;meow&quot; }
+
+type Dog struct{}
+
+func (d Dog) Sound() string { return &quot;guk&quot; }
+
+func call(animal Animal) {
+    fmt.Println(animal.Sound())
+}
+
+func main() {
+    call(Cat{})
+    // Output: meow
+
+    call(Dog{})
+    // Output: guk
+}
+
+</code></pre></section><section class="aligncenter"><h2>Contoh</h2></section><section class="aligncenter"><h3>Notes API Backend</h3><ul><li>API Sederhana yang berfungsi untuk membuat dan menampilkan catatan.</li><li>Menggunakan MySQL untuk menyimpan data.</li><li>Hanya akan menggunakan library bawaan golang.</li></ul></section><section class="aligncenter"><h3>Packages</h3><pre><code class="language-javascript">import (
+    &quot;database/sql&quot;
+    &quot;log&quot;
+    &quot;net/http&quot;
+    &quot;time&quot;
+    &quot;encoding/json&quot;
+
+    _ &quot;github.com/go-sql-driver/mysql&quot;
+)
+</code></pre><ul><li><code>net/http</code> adalah package untuk server dan client http.</li><li><code>database/sql</code> adalah package abstraksi perintah ke sql database.</li><li><code>github.com/go-sql-driver/mysql</code> adalah package untuk driver mysql yang akan digunakan oleh package <code>database/sql</code>.</li><li><code>encoding/json</code> adalah package yang digunakan untuk mengkonversi nilai golang kedalam bentuk json dan sebaliknya.</li></ul></section><section class="aligncenter"><h3>Model dan Controller</h3><pre><code class="language-javascript">type Note struct {
+    ID        int64     `json:&quot;id&quot;`
+    Content   string    `json:&quot;content&quot;`
+    CreatedAt time.Time `json:&quot;created_at&quot;`
+}
+
+type NoteController struct {
+    DB *sql.DB
+}
+
+</code></pre><ul><li>Stuct <code>Note</code> berfungsi untuk menampung data yang akan di proses controller.</li><li><code>NoteController</code> menyimpan dependensi yang dibutuhkan oleh controller tersbut, yaitu <code>DB</code>.</li></ul></section><section class="aligncenter"><h3>Menampilkan Seluruh Catatan</h3><pre><code class="language-javascript">func (nc NoteController) List(w http.ResponseWriter, req *http.Request) {
+    // 1. Query ke database.
+    rows, err := nc.DB.Query(&quot;SELECT id, content, created_at FROM notes&quot;)
+    if err != nil {
+        http.Error(w, err.Error(), 500)
+        return
+    }
+    defer rows.Close() // Pastikan row ditutup setelah fungsi selesai.
+
+    // 2. Baca hasil query database.
+    notes := make([]Note, 0)
+    for rows.Next() {
+        var note Note
+        err := rows.Scan(&amp;note.ID, &amp;note.Content, &amp;note.CreatedAt)
+        if err != nil {
+            http.Error(w, err.Error(), 500)
+            return
+        }
+
+        notes = append(notes, note)
+    }
+
+    // 3. Kirim response balikan.
+    w.Header().Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
+    w.WriteHeader(http.StatusOK)
+    json.NewEncoder(w).Encode(notes)
+}
+</code></pre></section><section class="aligncenter"><h3>Menyimpan Catatan Baru</h3><pre><code class="language-javascript">func (nc NoteController) Create(w http.ResponseWriter, req *http.Request) {
+    var note Note
+    // 1. Parse json yang dikirimkan melalui request.
+    if err := json.NewDecoder(req.Body).Decode(&amp;note); err != nil {
+        http.Error(w, err.Error(), 400)
+    }
+
+    // 2, Update tanggal pembuatan note.
+    note.CreatedAt = time.Now()
+
+    // 3. Simpan ke Database.
+    result, err := nc.DB.Exec(&quot;INSERT INTO notes (content, created_at) VALUES (?, ?)&quot;, note.Content, note.CreatedAt)
+    if err != nil {
+        http.Error(w, err.Error(), 500)
+        return
+    }
+
+    // 4. Ambil Primary ID hasil insert sebelunmnya.
+    note.ID, err = result.LastInsertId()
+    if err != nil {
+        http.Error(w, err.Error(), 500)
+        return
+    }
+
+    // 5. Kirim response balikan.
+    w.Header().Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
+    w.WriteHeader(http.StatusCreated)
+    json.NewEncoder(w).Encode(note)
+}
+</code></pre></section><section class="aligncenter"><h3>Inisialisasi dan Menjalankan Server</h3><pre><code class="language-javascript">func main() {
+    // 1. Buka koneksi ke database mysql.
+    db, err := sql.Open(&quot;mysql&quot;, &quot;root@tcp(localhost:3306)/notes?parseTime=True&amp;loc=Local&quot;)
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer db.Close()
+
+    // 2. Buat Controller baru untuk Note, dan sertakan dependensinya.
+    noteController := NoteController{DB: db}
+
+    // 3. Setup routing untuk endpoint http.
+    mux := http.NewServeMux()
+    mux.HandleFunc(&quot;/&quot;, func(w http.ResponseWriter, req *http.Request) {
+        if req.URL.Path != &quot;/&quot; {
+            http.NotFound(w, req)
+            return
+        }
+
+        switch req.Method {
+        case &quot;GET&quot;:
+            noteController.List(w, req)
+        case &quot;POST&quot;:
+            noteController.Create(w, req)
+        default:
+            http.NotFound(w, req)
+        }
+    })
+
+    // 4. Jalanklan server!
+    log.Fatal(http.ListenAndServe(&quot;:8000&quot;, mux))
+}
+</code></pre></section><section class="aligncenter"><h3>Hasil: Membuat Catatan Baru</h3><img src="fc1bdbb480bf15c3b9f8f6d0626a12a6.webp"></section><section class="aligncenter"><h3>Hasil: Menampilkan Semua Catatan</h3><img src="3bf0035bb941b961b4ac3164a3b15624.webp"></section><section class="aligncenter"><h2>Thank You</h2><ul><li>Slide:<ul><li><a href="https://fs02.github.io/slides/golang-fundamentals">https://fs02.github.io/slides/golang-fundamentals</a></li></ul></li><li>Example:<ul><li><a href="https://github.com/Fs02/slides/tree/master/golang-fundamentals/example">https://github.com/Fs02/slides/tree/master/golang-fundamentals/example</a></li></ul></li><li>References:<ul><li><a href="https://dev.to/bjhaid_93/switching-from-javascript-to-golang-15km">https://dev.to/bjhaid_93/switching-from-javascript-to-golang-15km</a></li><li><a href="https://yourbasic.org/golang/go-java-tutorial/">https://yourbasic.org/golang/go-java-tutorial/</a></li><li><a href="https://dasarpemrogramangolang.novalagung.com">https://dasarpemrogramangolang.novalagung.com</a></li><li><a href="https://godoc.org/database/sql/driver">https://godoc.org/database/sql/driver</a></li><li><a href="https://golang.org/pkg/net/http">https://golang.org/pkg/net/http</a></li><li><a href="https://golang.org/pkg/encoding/json">https://golang.org/pkg/encoding/json</a></li></ul></li></ul></section></article></div><script type="text/javascript" src="runtime.3b6afeb135169a955ec1.bundle.js"></script><script type="text/javascript" src="vendor.7.7fb5b7ae151def31b5bc.bundle.js"></script><script type="text/javascript" src="main.4.bb98e29f0a39d5edaf7e.bundle.js"></script></body></html>

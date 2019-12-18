@@ -1,0 +1,22 @@
+meta:
+  title: Golang fundamentals
+  description: Dasar-dasar pemogramana Golang.
+slide:
+  loop: false
+  sidebar: true
+  targetBlank: true
+  showIndex: true
+  isVertical: false
+  code:
+    languages:
+      - go
+    plugins: []
+    theme: default
+  chart: false
+  math: false
+extends:
+  js:
+  css: ./style.css
+  webpack:
+build:
+  ssr: true
