@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-type" content="text/html; charset=utf-8"><meta name="theme-color" content="#3498db"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Dasar-dasar pemogramana Golang."><title>Golang fundamentals</title><meta property="og:title" content="Golang fundamentals"><meta property="og:type" content="article"><meta property="og:description" content="Dasar-dasar pemogramana Golang."><link href="vendor.7.b228ccd04d49e4030761.css" rel="stylesheet"><link href="main.4.6904585b8b5fe2456fcd.css" rel="stylesheet"></head><body><div id="root"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="btn-sidebar" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg><article id="webslides"><section class="aligncenter title"><h1>Golang Fundamentals</h1><p><strong>Surya</strong> - Software Engineer @ Bukalapak</p><p><a href="https://github.com/Fs02">github.com/Fs02</a></p></section><section class="aligncenter"><h2>Mari Belajar Golang</h2><img src="0e9fde3b932ba24b688526c596b4991d.webp"></section><section class="aligncenter"><h3>Halo 🇮🇩!</h3><pre><code class="language-javascript">package main
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-type" content="text/html; charset=utf-8"><meta name="theme-color" content="#3498db"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Dasar-dasar pemogramana Golang."><title>Golang fundamentals</title><meta property="og:title" content="Golang fundamentals"><meta property="og:type" content="article"><meta property="og:description" content="Dasar-dasar pemogramana Golang."><link href="vendor.7.b228ccd04d49e4030761.css" rel="stylesheet"><link href="main.4.d2cf09108259bdbce18e.css" rel="stylesheet"></head><body><div id="root"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="btn-sidebar" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg><article id="webslides"><section class="aligncenter title"><h1>Golang Fundamentals</h1><p><strong>Surya</strong> - Software Engineer @ Bukalapak</p><p><a href="https://github.com/Fs02">github.com/Fs02</a></p></section><section class="aligncenter"><h2>Mari Belajar Golang</h2><img src="0e9fde3b932ba24b688526c596b4991d.webp"></section><section class="aligncenter"><h3>Halo 🇮🇩!</h3><pre><code class="language-javascript">package main
 
 import (
     &quot;fmt&quot;
@@ -277,7 +277,66 @@ func main() {
     // Output: guk
 }
 
-</code></pre></section><section class="aligncenter"><h2>Contoh</h2></section><section class="aligncenter"><h3>Notes API Backend</h3><ul><li>API Sederhana yang berfungsi untuk membuat dan menampilkan catatan.</li><li>Menggunakan MySQL untuk menyimpan data.</li><li>Hanya akan menggunakan library bawaan golang.</li></ul></section><section class="aligncenter"><h3>Packages</h3><pre><code class="language-javascript">import (
+</code></pre></section><section class="aligncenter"><h3>Error</h3><pre><code class="language-javascript">type error interface{
+    Error() string
+}
+</code></pre><pre><code class="language-javascript">// Custom Error
+type MaxMultiplyError struct{}
+
+func (mme MaxMultiplyError) Error() string {
+    return &quot;Perkalian melebihi batas yang diperbolehkan&quot;
+}
+
+</code></pre><ul><li>Error adalah interface bawaan golang yang memiliki minimal satu fungsi, yaitu <code>Error()</code>.</li><li>Custom Error dapat didefinisikan dengan mengimplementasi interface error.</li></ul></section><section class="aligncenter"><h3>Penanganan Error</h3><pre><code class="language-javascript">package main
+
+import (
+    &quot;fmt&quot;
+    &quot;strconv&quot;
+)
+
+func multiplyString(a string, b string) (int, error) {
+    numa, err := strconv.Atoi(a)
+    if err != nil {
+        return 0, err
+    }
+
+    numb, err := strconv.Atoi(b)
+    if err != nil {
+        return 0, err
+    }
+
+    result := numa * numb
+    if result &gt; 100 {
+        return 0, MaxMultiplyError{}
+    }
+
+    return result, nil
+}
+
+func main() {
+    result, err := multiplyString(&quot;10&quot;, &quot;11&quot;)
+    fmt.Println(&quot;result:&quot;, result, &quot;, error:&quot;, err)
+    // Output: result: 0 , error: Perkalian melebihi batas yang diperbolehkan
+}
+</code></pre></section><section class="aligncenter"><h3>Defer, Panic &amp; Recover</h3><pre><code class="language-javascript">package main
+
+import (
+    &quot;fmt&quot;
+)
+
+func main() {
+    defer func() {
+        if r := recover(); r != nil {
+            fmt.Println(&quot;Eksekusi gagal:&quot;, r)
+        } else {
+            fmt.Println(&quot;Eksekusi sukses&quot;)
+        }
+    }()
+
+    panic(&quot;ada error gan&quot;)
+    // Output: result: 0 , error: Perkalian melebihi batas yang diperbolehkan
+}
+</code></pre><ul><li><code>panic</code> adalah fungsi yang akan menghentikan flow eksekusi program dan panik.</li><li><code>recover</code> adalah fungsi yang akan merecover error hasil <code>panic</code>, sekaligus menyelamatkan ekeskusi yang panic.</li><li><code>defer</code> adalah fungsi yang akan dipanggil sesaat sebelum fungsi tersebut selesai dieksekusi, yaitu sebelum hasil return dikembalikan ke pemanggil.</li></ul></section><section class="aligncenter"><h2>Contoh</h2></section><section class="aligncenter"><h3>Notes API Backend</h3><ul><li>API Sederhana yang berfungsi untuk membuat dan menampilkan catatan.</li><li>Menggunakan MySQL untuk menyimpan data.</li><li>Hanya akan menggunakan library bawaan golang.</li></ul></section><section class="aligncenter"><h3>Packages</h3><pre><code class="language-javascript">import (
     &quot;database/sql&quot;
     &quot;log&quot;
     &quot;net/http&quot;
@@ -384,4 +443,4 @@ type NoteController struct {
     // 4. Jalanklan server!
     log.Fatal(http.ListenAndServe(&quot;:8000&quot;, mux))
 }
-</code></pre></section><section class="aligncenter"><h3>Hasil: Membuat Catatan Baru</h3><img src="fc1bdbb480bf15c3b9f8f6d0626a12a6.webp"></section><section class="aligncenter"><h3>Hasil: Menampilkan Semua Catatan</h3><img src="3bf0035bb941b961b4ac3164a3b15624.webp"></section><section class="aligncenter"><h2>Thank You</h2><ul><li>Slide:<ul><li><a href="https://fs02.github.io/slides/golang-fundamentals">https://fs02.github.io/slides/golang-fundamentals</a></li></ul></li><li>Example:<ul><li><a href="https://github.com/Fs02/slides/tree/master/golang-fundamentals/example">https://github.com/Fs02/slides/tree/master/golang-fundamentals/example</a></li></ul></li><li>References:<ul><li><a href="https://dev.to/bjhaid_93/switching-from-javascript-to-golang-15km">https://dev.to/bjhaid_93/switching-from-javascript-to-golang-15km</a></li><li><a href="https://yourbasic.org/golang/go-java-tutorial/">https://yourbasic.org/golang/go-java-tutorial/</a></li><li><a href="https://dasarpemrogramangolang.novalagung.com">https://dasarpemrogramangolang.novalagung.com</a></li><li><a href="https://godoc.org/database/sql/driver">https://godoc.org/database/sql/driver</a></li><li><a href="https://golang.org/pkg/net/http">https://golang.org/pkg/net/http</a></li><li><a href="https://golang.org/pkg/encoding/json">https://golang.org/pkg/encoding/json</a></li></ul></li></ul></section></article></div><script type="text/javascript" src="runtime.b98041c46f62d1980d3c.bundle.js"></script><script type="text/javascript" src="vendor.7.b228ccd04d49e4030761.bundle.js"></script><script type="text/javascript" src="main.4.6904585b8b5fe2456fcd.bundle.js"></script></body></html>
+</code></pre></section><section class="aligncenter"><h3>Hasil: Membuat Catatan Baru</h3><img src="fc1bdbb480bf15c3b9f8f6d0626a12a6.webp"></section><section class="aligncenter"><h3>Hasil: Menampilkan Semua Catatan</h3><img src="3bf0035bb941b961b4ac3164a3b15624.webp"></section><section class="aligncenter"><h2>Thank You</h2><ul><li>Slide:<ul><li><a href="https://fs02.github.io/slides/golang-fundamentals">https://fs02.github.io/slides/golang-fundamentals</a></li></ul></li><li>Example:<ul><li><a href="https://github.com/Fs02/slides/tree/master/golang-fundamentals/example">https://github.com/Fs02/slides/tree/master/golang-fundamentals/example</a></li></ul></li><li>References:<ul><li><a href="https://dev.to/bjhaid_93/switching-from-javascript-to-golang-15km">https://dev.to/bjhaid_93/switching-from-javascript-to-golang-15km</a></li><li><a href="https://yourbasic.org/golang/go-java-tutorial/">https://yourbasic.org/golang/go-java-tutorial/</a></li><li><a href="https://dasarpemrogramangolang.novalagung.com">https://dasarpemrogramangolang.novalagung.com</a></li><li><a href="https://godoc.org/database/sql/driver">https://godoc.org/database/sql/driver</a></li><li><a href="https://golang.org/pkg/net/http">https://golang.org/pkg/net/http</a></li><li><a href="https://golang.org/pkg/encoding/json">https://golang.org/pkg/encoding/json</a></li></ul></li></ul></section></article></div><script type="text/javascript" src="runtime.b98041c46f62d1980d3c.bundle.js"></script><script type="text/javascript" src="vendor.7.b228ccd04d49e4030761.bundle.js"></script><script type="text/javascript" src="main.4.d2cf09108259bdbce18e.bundle.js"></script></body></html>

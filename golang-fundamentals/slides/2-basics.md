@@ -409,3 +409,93 @@ func main() {
 }
 
 ```
+
+---
+
+### Error
+
+```javascript
+type error interface{
+	Error() string
+}
+```
+
+```javascript
+// Custom Error
+type MaxMultiplyError struct{}
+
+func (mme MaxMultiplyError) Error() string {
+	return "Perkalian melebihi batas yang diperbolehkan"
+}
+
+```
+
+- Error adalah interface bawaan golang yang memiliki minimal satu fungsi, yaitu `Error()`.
+- Custom Error dapat didefinisikan dengan mengimplementasi interface error.
+
+---
+
+### Penanganan Error
+
+```javascript
+package main
+
+import (
+	"fmt"
+	"strconv"
+)
+
+func multiplyString(a string, b string) (int, error) {
+	numa, err := strconv.Atoi(a)
+	if err != nil {
+		return 0, err
+	}
+
+	numb, err := strconv.Atoi(b)
+	if err != nil {
+		return 0, err
+	}
+
+	result := numa * numb
+	if result > 100 {
+		return 0, MaxMultiplyError{}
+	}
+
+	return result, nil
+}
+
+func main() {
+	result, err := multiplyString("10", "11")
+	fmt.Println("result:", result, ", error:", err)
+	// Output: result: 0 , error: Perkalian melebihi batas yang diperbolehkan
+}
+```
+
+---
+
+### Defer, Panic & Recover
+
+```javascript
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("Eksekusi gagal:", r)
+		} else {
+			fmt.Println("Eksekusi sukses")
+		}
+	}()
+
+	panic("ada error gan")
+	// Output: result: 0 , error: Perkalian melebihi batas yang diperbolehkan
+}
+```
+
+- `panic` adalah fungsi yang akan menghentikan flow eksekusi program dan panik.
+- `recover` adalah fungsi yang akan merecover error hasil `panic`, sekaligus menyelamatkan ekeskusi yang panic.
+- `defer` adalah fungsi yang akan dipanggil sesaat sebelum fungsi tersebut selesai dieksekusi, yaitu sebelum hasil return dikembalikan ke pemanggil.
